@@ -21,7 +21,7 @@ var intervalId;
 var timer;
 
 //This questions array holds all questions and answers
-var questions = [
+var QuestionsArr = [
     {
         question: "why am i so poor?",
         answers: ["it is my birthright", "i lack the qualifications", "lost the lottery", "not sure"],
@@ -103,12 +103,38 @@ $(document).on("click", '.choice', function () {
 //Start button changes game state to true which displays question and answers
 $("#startButton").click(function () {
     started = true;
+    shuffle(QuestionsArr);
+    for(var i = 0; i < QuestionsArr.length; i++) {
+        shuffle(QuestionsArr[i].answers);
+    }
     $("#answers").show();
     $("#startButton").hide();
     displayQ();
     $("#timer").html("<h2>" + countdown + "</h2>");
 });
 
+//Function to shuffle questions array
+function shuffle(Arr){
+    var currentIndex = Arr.length;
+    var tempVal;
+    var randomIndex;
+
+    //While there are still indexes remaining, shuffle
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        //Forms triangle to swap old index with new random index
+        tempVal = Arr[currentIndex];
+        Arr[currentIndex] = Arr[randomIndex];
+        Arr[randomIndex] = tempVal;
+    }
+    
+    return Arr;
+    
+}
+
+//====================[After Selecting Answer]========================
 //Selects new question
 function newQA() {
     $(".choice").empty();
@@ -164,13 +190,14 @@ function displayQ() {
     timer = setTimeout(tooSlow, 1000 * 30);
 
     if (ended === !true) {
-        currentQuestion.text(questions[q].question); //Displays the question
-        correctA = questions[q].correctA; //Sets hidden var of correct answer  
+
+        currentQuestion.text(QuestionsArr[q].question); //Displays the question
+        correctA = QuestionsArr[q].correctA; //Sets hidden var of correct answer  
 
         //Inserts text to each button and assigns each buttons' values = text inserted
-        for (var i = 0; i < questions[q].answers.length; i++) {
-            btnAnswers[i].text(questions[q].answers[i]);
-            btnAnswers[i].val(questions[q].answers[i])
+        for (var i = 0; i < QuestionsArr[q].answers.length; i++) {
+            btnAnswers[i].text(QuestionsArr[q].answers[i]);
+            btnAnswers[i].val(QuestionsArr[q].answers[i])
         }
     }
 
