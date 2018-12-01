@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia Game</title>
+
+    <link rel="stylesheet" href="assets/css/reset.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Insecurity Trivia Game</h1>
+                <p class="lead">Answer the questions correctly and see your score at the end!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row mt-5 mb-5">
+            <button type="button" class="btn btn-primary" id="startButton">Start!</button>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-md-12 text-center">
+                <div>
+                    <h1 id="question"></h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container text-center" id="answers">
+            <div type="button" class="choice btn btn-dark" id="a1" value=""></div>
+            <div type="button" class="choice btn btn-dark" id="a2" value=""></div>
+            <div type="button" class="choice btn btn-dark" id="a3" value=""></div>
+            <div type="button" class="choice btn btn-dark" id="a4" value=""></div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row score">
+            <div class="col-md-4">
+                <p>Correct:
+                    <span id="correct"></span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>Incorrect:
+                    <span id="incorrect"></span>
+                </p>
+            </div>
+        </div>
+        <div class="row endScreen">
+            <div class="col-md-12">
+                <img src="assets/images/youre_winner.jpg" id="winImg">
+            </div>
+            <div class="col-md-12">
+                <img src="assets/images/you_died.jpg" id="loseImg">
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/javascript/app.js"></script>
+</body>
+
+</html>
