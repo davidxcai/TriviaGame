@@ -1,19 +1,24 @@
 $(document).ready()
 
+//Game state variables; if started or not
 var started = false;
 var ended = false;
-var selected;
 
+
+var q = 0; //Questions array index, adter each guess, increment by 1
 var currentQuestion = $("#question")
 var btnAnswers = [$("#a1"), $("#a2"), $("#a3"), $("#a4")];
+var selected;
 var correctA;
 
+//Variables determine if you win or lose
 var correctTotal = 0;
 var incorrectTotal = 0;
 
-var q = 0; //Questions array index, adter each guess, increment by 1
-
-var answered = [];
+//Timer variables
+var countdown = 30;
+var intervalId;
+var timer;
 
 //This questions array holds all questions and answers
 var questions = [
@@ -33,6 +38,48 @@ var questions = [
         question: "what is my favorite color?",
         answers: ["yes", "blue", "not blue", "not sure"],
         correctA: "blue"
+    },
+
+    {
+        question: "why does my dad color me?",
+        answers: ["because i do as i'm told", "please", "because i made mom", "sure"],
+        correctA: "please"
+    },
+
+    {
+        question: "why does my favorite color beat me?",
+        answers: ["because i told him", "pleano", "because i made mom leave", "not sure"],
+        correctA: "pleano"
+    },
+
+    {
+        question: "what is my favorite dad?",
+        answers: ["dad", "dad?", "daaaad!", "...dad?"],
+        correctA: "...dad?"
+    },
+
+    {
+        question: "like where do we go?",
+        answers: ["african", "himalayan", "right here", "right there"],
+        correctA: "right there"
+    },
+
+    {
+        question: "do i exist?",
+        answers: ["partially", "no", "yes", "no"],
+        correctA: "yes"
+    },
+
+    {
+        question: "where can i find some good pizza?",
+        answers: ["pizza hut", "pizza nut", "pizza palace", "none of the above"],
+        correctA: "none of the above"
+    },
+
+    {
+        question: "Just Monica",
+        answers: ["Ok", "Ok", "Ok", "Ok"],
+        correctA: "Ok"
     }
 ];
 
@@ -45,25 +92,28 @@ if (ended === false) {
     $(".endScreen").hide();
 }
 
+//Button selector that grabs value
 $(document).on("click", '.choice', function () {
     selected = $(this).val();
     console.log("You've selected: " + selected);
     compare();
 })
 
+//==========================[ START BUTTON]============================
 //Start button changes game state to true which displays question and answers
 $("#startButton").click(function () {
     started = true;
-    // gameStart();
     $("#answers").show();
     $("#startButton").hide();
     displayQ();
+    $("#timer").html("<h2>" + countdown + "</h2>");
 });
 
+//Selects new question
 function newQA() {
     $(".choice").empty();
     $(currentQuestion).empty();
-    if (q === 10) {
+    if (q === 9) {
         started = false;
         ended = true;
     }
@@ -72,24 +122,47 @@ function newQA() {
 //Button function, compares the correct answer with what user selected
 function compare() {
     if (selected === correctA) {
-        console.log("Yay you got it right!");
-        console.log("====================================")
         correctTotal++;
-        newQA();
-        q = q += 1;
-        displayQ();
     }
-    else {
-        console.log("Wrong. Loser.");
-        console.log("====================================")
+    if (selected !== correctA) {
         incorrectTotal++;
-        newQA();
-        q = q += 1;
-        displayQ();
     }
+    clearTimeout(timer);
+    newQA();
+    q = q += 1;
+    countdown = 30;
+    displayQ();
+    
 }
 
+//Runs the function if timer reaches 0
+function tooSlow() {
+    if (countdown === 0) {
+        console.log("you were too slow");
+        countdown = 30;
+    }
+    newQA();
+    q = q += 1;
+    displayQ();
+    clearTimeout(tooSlow);
+}
+//Decrease countdown by 1
+function decrement() {
+    countdown--;
+    $("#timer").html("<h2>" + countdown + "</h2>");
+}
+
+//=========================[MAIN RUNNING FUNCTION]===========================
+//Main function running the game
+
 function displayQ() {
+    $("#timer").html("<h2>" + countdown + "</h2>");
+
+    clearInterval(intervalId);
+    countdown = 30;
+    intervalId = setInterval(decrement, 1000)
+    timer = setTimeout(tooSlow, 1000 * 30);
+
     if (ended === !true) {
         currentQuestion.text(questions[q].question); //Displays the question
         correctA = questions[q].correctA; //Sets hidden var of correct answer  
@@ -101,23 +174,36 @@ function displayQ() {
         }
     }
 
+    //Determines if game has ended
     if (ended === true) {
         $(".score").show();
+        $("#answers").hide();
         endGame();
     }
-    console.log("Correct answer: " + correctA);
+
+    console.log("Answer: " + correctA);
 }
 
+//===========================================================================
+
+
 function endGame() { //Displays the end game screen
+    clearTimeout(timer);
+    $("#timer").hide();
     $(".choice").empty();
     $(currentQuestion).empty();
-    if (correctTotal > incorrectTotal) {
-        $("#winImg").show();
+    $("#correct").append(correctTotal);
+    $("#incorrect").append(incorrectTotal);
+    if (correctTotal >= 7) {
+        $(".endScreen").show();
+        $("#loseImg").hide();
     }
-    if (incorrectTotal > correctTotal) {
-        $("#loseImg").show();
+    else if (correctTotal < 7) {
+        $(".endScreen").show();
+        $("#winImg").hide();
     }
 }
+
 
 
 //press start button selects first question
