@@ -1,0 +1,122 @@
+body {
+    background-color: #fff9e6;
+}
+
+.jumbotron {
+    margin-top: 3%;
+    background-color: #ddffe5;
+    text-align: center;
+    font-family: 'Amatic SC', cursive;
+    border-radius: 25px;
+}
+
+.display-4 {
+    font-size: 500%;
+}
+
+.display-text {
+    font-size: 200%;
+}
+
+#startButton {
+    font-family: 'Mali', cursive;
+    background-color: #defbff;
+    float: none;
+    margin: 0 auto;
+    margin-top: 3%;
+    padding: 15px 40px;
+    font-size: 40px;
+}
+#startButton:hover {
+    background-color: #ffeaea;
+    -webkit-transform: rotateZ(-5deg) scale(1.1);
+    -ms-transform: rotateZ(-5deg) scale(1.1);
+    transform: rotateZ(-5deg) scale(1.1);
+    transition: transform .1s;
+}
+
+#timer {
+    margin-bottom: 2%;
+    margin-left: 3%;
+}
+
+#displayCard {
+    background-color: #fffaf9;
+    border-radius: 25px;
+}
+
+#question {
+    font-family: 'Gamja Flower', cursive;
+}
+
+#answerBox {
+    margin-bottom: 3%;
+}
+
+.choice {
+    border-radius: 25px;
+    white-space: normal;
+}
+
+.choice:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transition: transform .1s;
+    transform: scale(1.1);
+}
+
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+#answers {
+    float: none;
+    margin: 0 auto;
+}
+
+#a1 {
+    background-color: #ffc6c6;
+}
+
+#a2 {
+    background-color: #ffecdf;
+}
+
+#a3 {
+    background-color: #e5f9f5;
+}
+
+#a4 {
+    background-color: #cfefff;
+}
+
+.score {
+    font-family: 'Mali', cursive;
+    text-align: center;
+    font-size: 170%;
+    margin-bottom: 2%;
+}
+
+.endScreen {
+    margin-bottom: 5%;
+    float: none;
+    margin: 0 auto;
+}
+
+.endPic {
+    height: auto;
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 25px;
+}
+
+#tryAgainBtn {
+    display: none;
+    font-family: 'Mali', cursive;
+    background-color: #defbff;
+    float: none;
+    margin: 0 auto;
+}

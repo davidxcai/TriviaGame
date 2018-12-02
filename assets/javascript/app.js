@@ -14,6 +14,7 @@ var correctA;
 //Variables determine if you win or lose
 var correctTotal = 0;
 var incorrectTotal = 0;
+var didNotAnswer = 0;
 
 //Timer variables
 var countdown = 30;
@@ -23,57 +24,57 @@ var timer;
 //This questions array holds all questions and answers
 var QuestionsArr = [
     {
-        question: "why am i so poor?",
-        answers: ["it is my birthright", "i lack the qualifications", "lost the lottery", "not sure"],
-        correctA: "it is my birthright"
+        question: "The seperation of cream during the churning of milk is due to:",
+        answers: ["Centrifugal force", "Centripetal force", "Frictional force", "Viscous drag"],
+        correctA: "Centrifugal force"
     },
 
     {
-        question: "why does my dad beat me?",
-        answers: ["because i don't do as i'm told", "please no", "because i made mom leave", "not sure"],
-        correctA: "please no"
+        question: "What is not true about momentum?",
+        answers: ["It is the product of the mass and the velocity of the body", "It is a vector quantity whose direction is same as that of the velocity", "Its physical dimension is MLT-2", "Its S.I. unit is kilogram metre per second"],
+        correctA: "Its physical dimension is MLT-2"
     },
 
     {
-        question: "what is my favorite color?",
-        answers: ["yes", "blue", "not blue", "not sure"],
-        correctA: "blue"
+        question: "Have you watched Ralph Breaks the Internet?",
+        answers: ["Ralph is saved by all the Disney Princesses", "The main antagonist is Ralph's insecurity", "Vanellope decides to stay in the internet", "Not yet"],
+        correctA: "The main antagonist is Ralph's insecurity"
     },
 
     {
-        question: "why does my dad color me?",
-        answers: ["because i do as i'm told", "please", "because i made mom", "sure"],
-        correctA: "please"
+        question: "Solve this qusetion using an algebraic method: (x + 4)(x - 4) = 9",
+        answers: ["x = 9", "x = 4 and x = -4", "x = 5", "x = 5 and x = -5"],
+        correctA: "x = 5 and x = -5"
     },
 
     {
-        question: "why does my favorite color beat me?",
-        answers: ["because i told him", "pleano", "because i made mom leave", "not sure"],
-        correctA: "pleano"
+        question: "アメリカ革命の転換点はどんな戦いでしたか？",
+        answers: ["ゲティスバーグの戦い", "フランスとインドの戦争", "バンカーヒルの戦い", "サラトガの戦い"],
+        correctA: "サラトガの戦い"
     },
 
     {
-        question: "what is my favorite dad?",
-        answers: ["dad", "dad?", "daaaad!", "...dad?"],
-        correctA: "...dad?"
+        question: "Wer möchte Gänsebraten mit Knödeln zum Abendessen haben?",
+        answers: ["Hans", "Andrea", "Helga", "Emma"],
+        correctA: "Hans"
     },
 
     {
-        question: "like where do we go?",
-        answers: ["african", "himalayan", "right here", "right there"],
-        correctA: "right there"
+        question: "What musical term is indicates a chord where the notes are played one after another rather than all together?",
+        answers: ["Arpeggio", "Adagio", "Adante", "Chorale"],
+        correctA: "Arpeggio"
     },
 
     {
-        question: "do i exist?",
-        answers: ["partially", "no", "yes", "no"],
-        correctA: "yes"
+        question: "Do i exist?",
+        answers: ["Partially", "No", "Yes", "Sometimes"],
+        correctA: "Yes"
     },
 
     {
-        question: "where can i find some good pizza?",
-        answers: ["pizza hut", "pizza nut", "pizza palace", "none of the above"],
-        correctA: "none of the above"
+        question: "Where can i find some good pizza?",
+        answers: ["Pizza hut", "Dominos Pizza", "Little Caesars", "None of these places"],
+        correctA: "None of these places"
     },
 
     {
@@ -85,7 +86,7 @@ var QuestionsArr = [
 
 //Determines if game is running or not; if not, hide the answers
 if (started === false) {
-    $("#answers").hide();
+    $("#displayCard").hide();
 }
 if (ended === false) {
     $(".score").hide();
@@ -107,10 +108,10 @@ $("#startButton").click(function () {
     for(var i = 0; i < QuestionsArr.length; i++) {
         shuffle(QuestionsArr[i].answers);
     }
-    $("#answers").show();
-    $("#startButton").hide();
+    $("#displayCard").show();
+    $("#startButton").remove();
     displayQ();
-    $("#timer").html("<h2>" + countdown + "</h2>");
+    $("#timer").html("<h2>Time Remaining: " + countdown + "</h2>");
 });
 
 //Function to shuffle questions array
@@ -133,6 +134,16 @@ function shuffle(Arr){
     return Arr;
     
 }
+
+//======================[Try Again Button]===========================
+
+$("#tryAgainBtn").click(function () {
+    resetGame();
+    $("#timer").show();
+    displayQ();
+    $("#timer").html("<h2>Time Remaining: " + countdown + "</h2>");
+})
+
 
 //====================[After Selecting Answer]========================
 //Selects new question
@@ -167,6 +178,7 @@ function tooSlow() {
         console.log("you were too slow");
         countdown = 30;
     }
+    didNotAnswer++;
     newQA();
     q = q += 1;
     displayQ();
@@ -175,14 +187,14 @@ function tooSlow() {
 //Decrease countdown by 1
 function decrement() {
     countdown--;
-    $("#timer").html("<h2>" + countdown + "</h2>");
+    $("#timer").html("<h2>Time Remaining: " + countdown + "</h2>");
 }
 
 //=========================[MAIN RUNNING FUNCTION]===========================
 //Main function running the game
 
 function displayQ() {
-    $("#timer").html("<h2>" + countdown + "</h2>");
+    $("#timer").html("<h2>Time Remaining: " + countdown + "</h2>");
 
     clearInterval(intervalId);
     countdown = 30;
@@ -203,8 +215,9 @@ function displayQ() {
 
     //Determines if game has ended
     if (ended === true) {
+        started= false;
         $(".score").show();
-        $("#answers").hide();
+        $("#displayCard").hide();
         endGame();
     }
 
@@ -219,8 +232,13 @@ function endGame() { //Displays the end game screen
     $("#timer").hide();
     $(".choice").empty();
     $(currentQuestion).empty();
-    $("#correct").append(correctTotal);
-    $("#incorrect").append(incorrectTotal);
+
+    $("#correct").text(correctTotal);
+    $("#incorrect").text(incorrectTotal);
+    $("#noAnswer").text(didNotAnswer);
+
+    $("#tryAgainBtn").show();
+
     if (correctTotal >= 7) {
         $(".endScreen").show();
         $("#loseImg").hide();
@@ -231,9 +249,24 @@ function endGame() { //Displays the end game screen
     }
 }
 
+function resetGame() {
+    $(".score").hide();
+    $(".endScreen").hide();
+    $("#tryAgainBtn").hide();
+    $("#timer").show();
+    
+    correctTotal = 0;
+    incorrectTotal = 0;
+    didNotAnswer = 0;
+    q = 0;
 
+    started = true;
+    ended = false;
 
-//press start button selects first question
-//player answers
-//after player input, moves to new question
-//after all questions answered, display score
+    //Reshuffles the questions
+    shuffle(QuestionsArr);
+    for(var i = 0; i < QuestionsArr.length; i++) {
+        shuffle(QuestionsArr[i].answers);
+    }
+    $("#displayCard").show();
+}
