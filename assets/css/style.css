@@ -24,8 +24,8 @@ body {
     float: none;
     margin: 0 auto;
     margin-top: 3%;
-    padding: 15px 40px;
-    font-size: 40px;
+    padding: 2% 3%;
+    font-size: 200%;
 }
 #startButton:hover {
     background-color: #ffeaea;
@@ -33,6 +33,14 @@ body {
     -ms-transform: rotateZ(-5deg) scale(1.1);
     transform: rotateZ(-5deg) scale(1.1);
     transition: transform .1s;
+}
+
+#pusheen {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    height: 25%;
 }
 
 #timer {
@@ -99,7 +107,6 @@ body {
 }
 
 .endScreen {
-    margin-bottom: 5%;
     float: none;
     margin: 0 auto;
 }
@@ -114,9 +121,18 @@ body {
 }
 
 #tryAgainBtn {
+    padding: 1% 1.5%;
     display: none;
     font-family: 'Mali', cursive;
     background-color: #defbff;
     float: none;
     margin: 0 auto;
+}
+
+#tryAgainBtn:hover {
+    background-color: #ffeaea;
+    -webkit-transform: rotateZ(-5deg) scale(1.1);
+    -ms-transform: rotateZ(-5deg) scale(1.1);
+    transform: rotateZ(-5deg) scale(1.1);
+    transition: transform .1s;
 }

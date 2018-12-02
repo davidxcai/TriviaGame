@@ -90,7 +90,7 @@ if (started === false) {
 }
 if (ended === false) {
     $(".score").hide();
-    $(".endScreen").hide();
+    // $(".endScreen").hide();
 }
 
 //Button selector that grabs value
@@ -110,6 +110,7 @@ $("#startButton").click(function () {
     }
     $("#displayCard").show();
     $("#startButton").remove();
+    $("#pusheen").remove();
     displayQ();
     $("#timer").html("<h2>Time Remaining: " + countdown + "</h2>");
 });
@@ -196,6 +197,7 @@ function decrement() {
 function displayQ() {
     $("#timer").html("<h2>Time Remaining: " + countdown + "</h2>");
 
+    //Timer function decrements each second
     clearInterval(intervalId);
     countdown = 30;
     intervalId = setInterval(decrement, 1000)
@@ -240,21 +242,19 @@ function endGame() { //Displays the end game screen
     $("#tryAgainBtn").show();
 
     if (correctTotal >= 7) {
-        $(".endScreen").show();
-        $("#loseImg").hide();
+        $(".endPic").attr("src", "assets/images/youre_winner.jpg");
     }
-    else if (correctTotal < 7) {
-        $(".endScreen").show();
-        $("#winImg").hide();
+    else {
+        $(".endPic").attr("src", "assets/images/you_died.jpg");
     }
+
 }
 
 function resetGame() {
     $(".score").hide();
-    $(".endScreen").hide();
     $("#tryAgainBtn").hide();
     $("#timer").show();
-    
+    $(".endPic").attr("src", "");
     correctTotal = 0;
     incorrectTotal = 0;
     didNotAnswer = 0;
