@@ -2,7 +2,8 @@
 
 [Check it out!](https://helloimdavidhaha.github.io/TriviaGame/)
 
-##About
+## About
+
 It's a ~~pretty bad~~ trivia game with 10 questions total.
 
 The questions are selected at random and the answers are in random order.
