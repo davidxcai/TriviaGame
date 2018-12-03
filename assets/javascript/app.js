@@ -66,7 +66,7 @@ var QuestionsArr = [
     },
 
     {
-        question: "Do i exist?",
+        question: "Do I exist?",
         answers: ["Partially", "No", "Yes", "Sometimes"],
         correctA: "Yes"
     },
