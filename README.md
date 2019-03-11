@@ -5,6 +5,7 @@ A trivia game built with Javascript/jQuery. The game will sort 10 random questio
 
 ## Built With
 Bootstrap - used for HTML and CSS
+Javascript/jQuery
 
 ## Made By
 Dafydd Zephyr
